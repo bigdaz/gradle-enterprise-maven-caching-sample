@@ -1,4 +1,4 @@
-package com.test;
+package com.example;
 
 import com.util.Util;
 
@@ -6,7 +6,7 @@ import com.util.Util;
  * Hello world!
  *
  */
-public class App 
+public class App
 {
     public static void main( String[] args )
     {
