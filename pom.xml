@@ -105,6 +105,7 @@
             <configuration>
               <sources>
                 <source>target/generated-sources/avro/</source>
+                <source>target/generated-sources/protobuf</source>
               </sources>
             </configuration>
           </execution>
@@ -163,6 +164,57 @@
                       </directory>
                       <directory>
                         <name>testOutputDirectory</name>
+                      </directory>
+                    </directories>
+                    <cacheableBecause>All inputs and outputs declared</cacheableBecause>
+                  </outputs>
+                </plugin>
+                <plugin>
+                  <groupId>com.github.os72</groupId>
+                  <artifactId>protoc-jar-maven-plugin</artifactId>
+                  <inputs>
+                    <fileSets>
+                      <fileSet>
+                        <name>inputDirectories</name>
+                      </fileSet>
+                      <fileSet>
+                        <name>includeDirectories</name>
+                      </fileSet>
+                    </fileSets>
+                    <properties>
+                      <property><name>addProtoSources</name></property>
+                      <property><name>addSources</name></property>
+                      <property><name>cleanOutputFolder</name></property>
+                      <property><name>compileMavenTypes</name></property>
+                      <property><name>extension</name></property>
+                      <property><name>includeImports</name></property>
+                      <property><name>includeMavenTypes</name></property>
+                      <property><name>includeStdTypes</name></property>
+                      <property><name>outputOptions</name></property>
+                      <property><name>pluginArtifact</name></property>
+                      <property><name>pluginPath</name></property>
+                      <property><name>protocArtifact</name></property>
+                      <property><name>protocCommand</name></property>
+                      <property><name>protocVersion</name></property>
+                      <property><name>type</name></property>
+                    </properties>
+                    <ignoredProperties>
+                      <ignore>optimizeCodegen</ignore>
+                      <ignore>localRepository</ignore>
+                      <ignore>remoteRepositories</ignore>
+                      <ignore>project</ignore>
+
+                      <!-- TODO : If outputTargets are set, then caching then additional configuration is required for caching -->
+                      <ignore>outputTargets</ignore>
+
+                      <!-- UNHANDLED : If outputDirectorySuffix is defined, then we need to provide the resulting outputDirectory path below -->
+                      <ignore>outputDirectorySuffix</ignore>
+                    </ignoredProperties>
+                  </inputs>
+                  <outputs>
+                    <directories>
+                      <directory>
+                        <name>outputDirectory</name>
                       </directory>
                     </directories>
                     <cacheableBecause>All inputs and outputs declared</cacheableBecause>
