@@ -1,7 +1,5 @@
 package com.example;
 
-import com.example.avro.User;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -31,8 +29,10 @@ public class AppTest
     }
 
     public void testUser() {
-        User user = App.getAvroUser();
+        assertEquals("Andrew", App.getAvroUser().getName());
+    }
 
-        assertEquals("Andrew", user.getName());
+    public void testProtoPerson() {
+        assertEquals("Perry", App.getProtobufPerson().getName());
     }
 }
