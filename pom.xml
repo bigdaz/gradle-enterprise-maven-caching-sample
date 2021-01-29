@@ -101,6 +101,9 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
         <version>3.13.0</version>
+        <configuration>
+          <excludeRoots>target/generated-sources</excludeRoots>
+        </configuration>
         <executions>
           <execution>
             <goals>
@@ -306,7 +309,7 @@
                           <property><name>renderViolationsByPriority</name></property>
                         </properties>
                         <ignoredProperties>
-                          <!-- Not correct to ignore these: we should be removing the respective inputs -->
+                          <!-- Not correct to simply ignore these: we must be removing the respective input directories from cache key -->
                           <ignore>excludeRoots</ignore>
 
                           <ignore>showPmdLog</ignore>
