@@ -76,7 +76,106 @@
           </execution>
         </executions>
       </plugin>
-
     </plugins>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>com.gradle</groupId>
+          <artifactId>gradle-enterprise-maven-extension</artifactId>
+          <configuration>
+            <gradleEnterprise>
+              <plugins>
+                <plugin>
+                  <artifactId>maven-pmd-plugin</artifactId>
+                  <executions>
+                    <execution>
+                      <id>pmd</id>
+                      <inputs>
+                        <fileSets>
+                          <fileSet>
+                            <name>compileSourceRoots</name>
+                            <includesProperty>includes</includesProperty>
+                            <excludesProperty>excludes</excludesProperty>
+                          </fileSet>
+                          <fileSet>
+                            <name>testSourceRoots</name>
+                            <includesProperty>includes</includesProperty>
+                            <excludesProperty>excludes</excludesProperty>
+                          </fileSet>
+                        </fileSets>
+
+                        <properties>
+                          <property><name>skip</name></property>
+                          <property><name>format</name></property>
+                          <property><name>linkXRef</name></property>
+                          <property><name>includeTests</name></property>
+                          <property><name>aggregate</name></property>
+                          <property><name>sourceEncoding</name></property>
+                          <property><name>includeXmlInSite</name></property>
+                          <property><name>skipEmptyReport</name></property>
+                          <property><name>excludeFromFailureFile</name></property>
+                          <property><name>jdkToolchain</name></property>
+                          <property><name>targetJdk</name></property>
+                          <property><name>language</name></property>
+                          <property><name>minimumPriority</name></property>
+                          <property><name>rulesets</name></property>
+                          <property><name>typeResolution</name></property>
+                          <property><name>benchmark</name></property>
+                          <property><name>suppressMarker</name></property>
+                          <property><name>skipPmdError</name></property>
+                          <property><name>renderProcessingErrors</name></property>
+                          <property><name>renderRuleViolationPriority</name></property>
+                          <property><name>renderViolationsByPriority</name></property>
+                        </properties>
+                        <ignoredProperties>
+                          <!-- Not correct to ignore these: we should be removing the respective inputs -->
+                          <ignore>excludeRoots</ignore>
+
+                          <ignore>showPmdLog</ignore>
+                          <ignore>reactorProjects</ignore>
+                          <ignore>session</ignore>
+
+                          <!-- It's not quite correct to ignore these values -->
+                          <ignore>xrefLocation</ignore>
+                          <ignore>xrefTestLocation</ignore>
+
+                          <ignore>rulesetsTargetDirectory</ignore> <!-- Work out what to do with these - local state? -->
+
+                          <!-- Ignored because we hard-code the outputs -->
+                          <ignore>targetDirectory</ignore>
+                          <ignore>benchmarkOutputFilename</ignore>
+
+                          <!-- This wil ignore the analysis cache if used, leaving it in place for subsequent invocations -->
+                          <!-- It's not clear if this is actually correct, or if we should mark as <localState> to purge the analysisCache when loading results from the build cache -->
+                          <ignore>analysisCache</ignore>
+                          <ignore>analysisCacheLocation</ignore>
+                        </ignoredProperties>
+                      </inputs>
+                      <outputs>
+                        <!-- There's no single property for each output file, so we must compose the path.
+                        These will need to be updated if <targetDirectory> or <benchmarkOutputFilename> are set. -->
+                        <files>
+                          <file>
+                            <name>pmdOutputFile</name>
+                            <path>${project.build.directory}/pmd.xml</path>
+                          </file>
+                          <file>
+                            <name>pmdBenchmarkFile</name>
+                            <path>${project.build.directory}/pmd-benchmark.txt</path>
+                          </file>
+                        </files>
+                        <cacheableBecause>All inputs and outputs declared</cacheableBecause>
+                      </outputs>
+                    </execution>
+                  </executions>
+                </plugin>
+              </plugins>
+            </gradleEnterprise>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
   </build>
 </project>
