@@ -74,7 +74,7 @@
         <version>3.0.0-M5</version>
       </plugin>
 
-      <!-- Apache Avro plugin -->
+      <!-- Apply Apache Avro plugin -->
       <plugin>
         <groupId>org.apache.avro</groupId>
         <artifactId>avro-maven-plugin</artifactId>
@@ -92,6 +92,25 @@
         </executions>
       </plugin>
 
+      <!-- Apply protobuf plugin -->
+      <plugin>
+        <groupId>com.github.os72</groupId>
+        <artifactId>protoc-jar-maven-plugin</artifactId>
+        <version>3.11.4</version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>target/generated-sources/protobuf</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Use build-helper plugin to add generated sources to compile -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
@@ -121,6 +140,7 @@
           <configuration>
             <gradleEnterprise>
               <plugins>
+                <!-- Cache configuration for Apache Avro -->
                 <plugin>
                   <groupId>org.apache.avro</groupId>
                   <artifactId>avro-maven-plugin</artifactId>
@@ -169,6 +189,8 @@
                     <cacheableBecause>All inputs and outputs declared</cacheableBecause>
                   </outputs>
                 </plugin>
+
+                <!-- Cache configuration for Protobuf -->
                 <plugin>
                   <groupId>com.github.os72</groupId>
                   <artifactId>protoc-jar-maven-plugin</artifactId>
@@ -226,7 +248,5 @@
         </plugin>
       </plugins>
     </pluginManagement>
-
-
   </build>
 </project>
