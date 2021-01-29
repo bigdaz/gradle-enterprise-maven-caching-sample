@@ -85,5 +85,105 @@
         </executions>
       </plugin>
     </plugins>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>com.gradle</groupId>
+          <artifactId>gradle-enterprise-maven-extension</artifactId>
+          <configuration>
+            <gradleEnterprise>
+              <plugins>
+                <plugin>
+                  <groupId>com.github.spotbugs</groupId>
+                  <artifactId>spotbugs-maven-plugin</artifactId>
+                  <executions>
+                    <execution>
+                      <id>spotbugs</id>
+                      <inputs>
+                        <fileSets>
+                          <fileSet>
+                            <name>classFilesDirectory</name>
+                          </fileSet>
+                          <fileSet>
+                            <name>testClassFilesDirectory</name>
+                          </fileSet>
+                        </fileSets>
+                        <properties>
+                          <property><name>skip</name></property>
+
+                          <property><name>xmlOutput</name></property>
+                          <property><name>spotbugsXmlOutput</name></property>
+                          <property><name>includeTests</name></property>
+                          <property><name>addSourceDirs</name></property>
+                          <property><name>xmlEncoding</name></property>
+                          <property><name>sourceEncoding</name></property>
+                          <property><name>threshold</name></property>
+                          <property><name>effort</name></property>
+                          <property><name>relaxed</name></property>
+                          <property><name>visitors</name></property>
+                          <property><name>omitVisitors</name></property>
+                          <property><name>pluginList</name></property>
+                          <property><name>onlyAnalyze</name></property>
+                          <property><name>nested</name></property>
+                          <property><name>maxRank</name></property>
+                          <property><name>failOnError</name></property>
+                          <property><name>skipEmptyReport</name></property>
+                          <property><name>userPrefs</name></property>
+
+                          <!-- Not quite right: These should be input files -->
+                          <property><name>includeFilterFile</name></property>
+                          <property><name>excludeFilterFile</name></property>
+                          <property><name>excludeBugsFile</name></property>
+                        </properties>
+                        <ignoredProperties>
+                          <!-- Ignored because we hard-code the output files : there is no single property representing the location of each input file -->
+                          <ignore>xmlOutputDirectory</ignore>
+                          <ignore>spotbugsXmlOutputDirectory</ignore>
+                          <ignore>spotbugsXmlOutputFilename</ignore>
+
+                          <!-- It's not quite correct to ignore these -->
+                          <ignore>xrefLocation</ignore>
+                          <ignore>xrefTestLocation</ignore>
+
+                          <ignore>compileSourceRoots</ignore> <!-- Read-only -->
+                          <ignore>testSourceRoots</ignore> <!-- Read-only -->
+                          <ignore>pluginArtifacts</ignore>
+                          <ignore>remoteRepositories</ignore>
+                          <ignore>localRepository</ignore>
+                          <ignore>remoteArtifactRepositories</ignore>
+                          <ignore>session</ignore>
+                          <ignore>debug</ignore>
+                          <ignore>plugins</ignore>
+                          <ignore>trace</ignore>
+                          <ignore>fork</ignore>
+                          <ignore>maxHeap</ignore>
+                          <ignore>timeout</ignore>
+                          <ignore>jvmArgs</ignore>
+                        </ignoredProperties>
+                      </inputs>
+                      <outputs>
+                        <files>
+                          <file>
+                            <name>xmlOutputFile</name>
+                            <path>${project.build.directory}/spotbugs.xml</path>
+                          </file>
+                          <file>
+                            <name>spotbugsXmlOutputFile</name>
+                            <path>${project.build.directory}/spotbugsXml.xml</path>
+                          </file>
+                        </files>
+                        <cacheableBecause>All inputs and outputs declared</cacheableBecause>
+                      </outputs>
+                    </execution>
+                  </executions>
+                </plugin>
+              </plugins>
+            </gradleEnterprise>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
   </build>
 </project>
